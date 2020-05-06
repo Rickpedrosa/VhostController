@@ -77,13 +77,14 @@ class ConfController {
     private fun deleteConf() {
         showAllConfs()
         val indexToDelete = readLine("Select conf to DELETE (index) -> ").toInt()
+        val confToRemove = _sourceToInactive[indexToDelete]
         httpdFile.writeCollectionContent(
             getSourceConfList(pathToHttpdConf)
                 .filterIndexed { index, _ ->
                     index != indexToDelete
                 }
         )
-        println("Configuration file deleted successfully")
+        println("Configuration file [${confToRemove}] deleted successfully")
         separation()
     }
 
@@ -103,6 +104,7 @@ class ConfController {
         println("2 - Add new configuration")
         println("3 - Delete configuration")
         println("4 - Mark configuration as ACTIVE")
+        println("0 - Type anything else to exit")
         when (readLine("Select option: ")) {
             "1" -> {
                 showAllConfs()
